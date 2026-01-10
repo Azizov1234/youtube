@@ -12,7 +12,10 @@ app.use(fileUpload())
 app.use(userRouter)
 
 app.use((error,req,res,next)=>{
-    if(error.status<500){
+    
+    
+    if(error.status && error.status<500){
+        
         return res.status(error.status).json({
             status:error.status,
             message:error.message,
@@ -22,11 +25,13 @@ app.use((error,req,res,next)=>{
    
     
     else{
-        let errorText=`[${new Date()}]--${req.method}--${req.url}--${error.message}`
+       
+        let errorText=`[${new Date()}]--${req.method}--${req.url}--${error}`
+        
         
         
         fs.appendFileSync(join(process.cwd(),'src','logs','logger.txt'),errorText+"\n") 
-        return res.status(error.status).json({
+        return res.status(500).json({
             status:500,
             message:"InternalServerError"
         })

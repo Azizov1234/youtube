@@ -3,22 +3,24 @@ import bcrypt from "bcrypt"
 import { config } from "dotenv";
 import  Jwt from "jsonwebtoken";
 import {extname, join} from "path"
+import { passwordHash } from "../utils/bcrypt.js";
+import { ConflictError, InternalServerError } from "../utils/error.js";
 config()
 class UserService{
 
     async register(body,files){
+        console.log(a);
         const {username,password}=body
         const {file}=files
         let existUser=await pool.query("select * from users where username=$1",[username])
-        // console.log(body,files);
+        
         
         if(existUser.rowCount){
-            return{
-                status:404,
-                message:"This user already existed"
-            }
+            throw new ConflictError(409,"This user already existed")
         };
-        let passHash= await bcrypt.hash(password,10)
+        
+        
+        let passHash= await passwordHash(password)
         let fileName= Date.now()+extname(file.name)
 
         let newUser= await pool.query("insert into users(username,password,avatar) values($1,$2,$3) RETURNING *",
@@ -32,13 +34,14 @@ class UserService{
             fileName
         )
         file.mv(uploads,(err)=>{
-            if(err) return { status:500,message:"Upload error: ",err}
+            if(err) throw new InternalServerError(500,err)
         })
         let id=newUser.rows[0].id
         return {
             status:201,
             message:"User is created",
-            accesToken: Jwt.sign({id,username},process.env.JWT_SECRET)
+            accesToken: Jwt.sign({id,username},process.env.JWT_SECRET,{expiresIn:'10m'}),
+            refreshToken:Jwt.sign({id,username},process.env.JWT_SECRET,{expiresIn:'10m'})
         }
         
         
@@ -48,7 +51,7 @@ class UserService{
 
     // } 
     // async getAllUsers(){
-
+        
     // }
 }
 

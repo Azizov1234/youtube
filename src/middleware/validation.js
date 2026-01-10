@@ -8,8 +8,10 @@ class UserMiddleware{
                 next( new BadRequestError(400,error.details[0].message))
             }
             next()
-        } catch (error) {
-            throw next( new InternalServerError(500,error.message))
+            
+            
+        } catch (error){
+            next( new InternalServerError(500,error.message))
         }
     }
 }

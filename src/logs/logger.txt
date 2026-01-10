@@ -1,6 +1,1 @@
-[Fri Jan 09 2026 17:48:38 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--
-[Fri Jan 09 2026 17:49:21 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--InternalServerError
-[Fri Jan 09 2026 17:52:20 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--
-[Fri Jan 09 2026 17:52:56 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--
-[Fri Jan 09 2026 17:53:17 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--
-[Fri Jan 09 2026 17:53:55 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--validation.registerSchema.validat is not a function
+[Sat Jan 10 2026 07:48:08 GMT+0500 (O‘zbekiston standart vaqti)]--POST--/api/register--ReferenceError: a is not defined
