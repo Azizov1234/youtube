@@ -9,7 +9,7 @@ config()
 class UserService{
 
     async register(body,files){
-        console.log(a);
+       
         const {username,password}=body
         const {file}=files
         let existUser=await pool.query("select * from users where username=$1",[username])
